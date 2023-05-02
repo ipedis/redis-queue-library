@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "redis-queue-library"
+version = "0.1.0"
+description = ""
+authors = ["Tejas <tejas@ipedis.com>"]
+readme = "README.md"
+packages = [{include = "redis_queue_library"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+redis = "^4.5.4"
+pydantic = "^1.10.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
