@@ -1,3 +1,4 @@
+import json
 import logging
 from typing import Callable
 
@@ -19,7 +20,9 @@ class Subscriber:
             if message is not None and isinstance(message, dict):
                 try:
                     message_data = message.get('data')
-                    if message_data is not None and isinstance(message_data, Message):
-                        handler(message_data)
+                    if message_data is not None and message_data != 1:
+                        message_data = json.loads(message_data)
+                        # reconstruct data to Message object
+                        handler(Message(channel_name=message.get('channel'), data=message_data.get('data')))
                 except Exception as e:
                     logger.error(f"Error during handling message: message: {message} Error: {e}")
