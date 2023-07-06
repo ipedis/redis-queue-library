@@ -23,6 +23,7 @@ class Subscriber:
                     if message_data is not None and message_data != 1:
                         message_data = json.loads(message_data)
                         # reconstruct data to Message object
-                        handler(Message(channel_name=message.get('channel'), data=message_data.get('data')))
+                        return handler(Message(channel_name=message.get('channel'), data=message_data.get('data')))
                 except Exception as e:
                     logger.error(f"Error during handling message: message: {message} Error: {e}")
+                    return Message(channel_name=message.get('channel'), data={"result": "error", "message": f"{e}"})
