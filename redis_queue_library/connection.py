@@ -28,7 +28,7 @@ class Connection(BaseSettings):
         return self.conn
 
     def __redis_client(self):
-        if self.ssl and self.ssl_ca_cert is not None:
+        if self.redis_ssl and self.redis_ssl_ca_cert is not None:
             return redis.StrictRedis(host=self.redis_host, port=self.redis_port, charset="utf-8",
                                      decode_responses=True, username=self.redis_username,
                                      password=self.redis_password, ssl=True, ssl_ca_certs=self.redis_ssl_ca_cert)
