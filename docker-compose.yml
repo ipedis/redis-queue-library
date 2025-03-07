@@ -1,0 +1,19 @@
+services:
+  redis:
+    image: "redis:6.2"
+    ports:
+      - "6279:6379"
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/app
