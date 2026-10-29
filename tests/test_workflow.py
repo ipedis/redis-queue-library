@@ -2,16 +2,17 @@ import threading
 import time
 import unittest
 
-from dotenv import load_dotenv
+import pytest
 
 from redis_queue_library.message import Message
 from redis_queue_library.publisher import Publisher
 from redis_queue_library.subscriber import Subscriber
 
 
+@pytest.mark.integration
+@pytest.mark.usefixtures('redis_available')
 class TestWorkflow(unittest.TestCase):
     def setUp(self):
-        load_dotenv()
         self.received_messages = []
         self.subscriber = Subscriber(channel_name='test_channel')
 

@@ -17,10 +17,11 @@ class Subscriber:
 
     def listen(self, handler: Callable):
         for message in self.sub.listen():
-            if message is not None and isinstance(message, dict):
+            # skip subscribe/unsubscribe confirmations, only handle published messages
+            if isinstance(message, dict) and message.get('type') == 'message':
                 try:
                     message_data = message.get('data')
-                    if message_data is not None and message_data != 1:
+                    if message_data is not None:
                         message_data = json.loads(message_data)
                         # reconstruct data to Message object
                         return handler(Message(channel_name=message.get('channel'), data=message_data.get('data')))
