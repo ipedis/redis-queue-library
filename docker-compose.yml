@@ -1,8 +1,8 @@
 services:
   redis:
-    image: "redis:6.2"
-    ports:
-      - "6279:6379"
+    image: redis:8.2-alpine@sha256:489a769e0a54dc245896132a15c72d2bc7296719954da99398f43a3877e5f8eb
+    # demo-only password, the server is not exposed outside the compose network
+    command: ["redis-server", "--requirepass", "demo-password"]
 
   app:
     build:
@@ -13,7 +13,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-    ports:
-      - "8000:80"
+      - REDIS_USERNAME=default
+      - REDIS_PASSWORD=demo-password
     volumes:
       - .:/app
